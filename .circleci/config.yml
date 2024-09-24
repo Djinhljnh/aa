@@ -21,21 +21,17 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-  test1:
-    executor: node-executor
+  run-tests:
+    docker:
+      - image: cimg/node:18.17  # Dùng Docker image với Node.js (hoặc tuỳ ngôn ngữ mà bạn cần)
     steps:
       - checkout
       - run:
-          name: Run first test
-          command: npm run test
-
-  test2:
-    executor: node-executor
-    steps:
-      - checkout
+          name: "Install dependencies"
+          command: npm install  # Cài đặt các phụ thuộc nếu bạn sử dụng npm
       - run:
-          name: Run second test
-          command: npm run test:other
+          name: "Run tests"
+          command: npm test
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
 workflows:
@@ -43,5 +39,4 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - say-hello
-      - test1
-      - test2
+      - run-test
