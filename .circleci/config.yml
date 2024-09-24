@@ -1,0 +1,62 @@
+version: 2.1
+
+jobs:
+  clone-repo:
+    docker:
+      - image: cimg/python:3.8  # Sử dụng Docker image Python 3.8, có thể thay đổi theo nhu cầu
+    steps:
+      - checkout
+      - run:
+          name: Clone Repository
+          command: git clone https://github.com/Toan211203/emo2_jenkin.git
+
+  build:
+    docker:
+      - image: cimg/python:3.8  # Sử dụng Python image
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: python3 hello.py  # Chạy script hello.py
+
+  test:
+    docker:
+      - image: cimg/python:3.8  # Sử dụng Docker image Python 3.8
+    steps:
+      - checkout
+      - run:
+          name: Testing
+          command: |
+            if [ -f hello.py ]; then
+              echo "File hello.py found. Displaying its content:"
+              cat hello.py
+              echo "Running the script..."
+              python3 hello.py
+            else
+              echo "File hello.py does not exist!"
+              exit 1
+            fi
+
+  deploy:
+    docker:
+      - image: cimg/python:3.8  # Có thể sử dụng image khác tuỳ thuộc vào yêu cầu của deploy
+    steps:
+      - checkout
+      - run:
+          name: Deploy
+          command: echo "Deploying..."  # Thêm các lệnh deploy thực tế tại đây
+
+workflows:
+  version: 2
+  pipeline-workflow:
+    jobs:
+      - clone-repo
+      - build:
+          requires:
+            - clone-repo
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
