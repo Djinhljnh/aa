@@ -28,12 +28,12 @@ jobs:
           name: Testing
           command: |
             if [ -f hello.py ]; then
-              echo "File hello.py found. Displaying its content:"
+              echo "File a.py found. Displaying its content:"
               cat hello.py
               echo "Running the script..."
               python3 hello.py
             else
-              echo "File hello.py does not exist!"
+              echo "File a.py does not exist!"
               exit 1
             fi
 
