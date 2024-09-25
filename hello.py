@@ -3,7 +3,7 @@
 # Hàm để in các số từ 1 đến 10
 def print_numbers():
     # Vòng lặp từ 1 đến 10
-    for i in range(1, 11):
+for i in range(1, 11):
         # Kiểm tra xem số có phải là số chẵn hay lẻ
         if i % 2 == 0:
             print(f"Số {i} là số chẵn")
